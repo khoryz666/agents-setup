@@ -27,19 +27,23 @@ into one parallel batch.
 - **Orchestrator (you):** decompose the work, write one brief per task, launch the
   agents, then review every diff, run the project's formatter + tests, and commit.
   On OpenCode this is **DeepSeek V4 Pro** (`deepseek/deepseek-v4-pro`); on Claude
-  Code it is **Claude** (Sonnet or Opus).
-- **Agent (cheap model):** reads its brief and writes files. It is fenced to file
-  read/write only — no shell, git, or tests — so it cannot commit or run anything
-  risky. Verification and commits are always the orchestrator's job.
+  Code it is **Claude Opus 5.5** (`claude-opus-5-5`).
+- **Agent (coding model):** reads its brief and writes files. On Claude Code the
+  coding models are **Haiku** (cheapest) or **Sonnet** (default); on OpenCode they
+  are the free models below. The agent is fenced to file read/write only — no shell,
+  git, or tests — so it cannot commit or run anything risky. Verification and commits
+  are always the orchestrator's job.
 
 ### Choosing the agent model (`--model`)
 `launch.sh` picks a default per runner; pass `--model` to override.
 
-- **Claude Code runner** (default `claude-sonnet-5`): pass `--model haiku` (or
-  `claude-haiku-4-5`) for the cheapest runs. Haiku handles well-specified,
-  mechanical work on the first pass — UI screens, CRUD forms, list/grid views, a
-  controller that mirrors a sibling. Reach for Sonnet when the task carries more
-  judgement. Either way, the quality bar is the brief plus your review, not the model.
+- **Claude Code runner** (default `claude-sonnet-5`): the coding tier is **Sonnet**
+  (default) or **Haiku** — pass `--model haiku` (or `claude-haiku-4-5`) for the
+  cheapest runs. Haiku handles well-specified, mechanical work on the first pass —
+  UI screens, CRUD forms, list/grid views, a controller that mirrors a sibling.
+  Reach for Sonnet when the task carries more judgement. The orchestrator stays on
+  Opus 5.5 regardless. Either way, the quality bar is the brief plus your review,
+  not the model.
 - **OpenCode runner** (default `opencode/deepseek-v4.1-flash-free`, $0): use any
   free model. `opencode/deepseek-v4.1-flash-free` is the default cheap choice;
   `opencode/flint-40b-free` and `opencode/pulse-alpha-free` are stronger free

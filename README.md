@@ -15,7 +15,7 @@ turns a sequence of independent slices into one parallel batch.
 │  • OpenCode: DeepSeek│                 │  • read brief, write files   │
 │    V4 Pro            │ ◀────────────── │  • file read/write only      │
 │  • Claude Code:      │   .done markers │  • no shell / git / tests    │
-│    Claude (Sonnet+)  │                 └──────────────────────────────┘
+│    Claude Opus 5.5   │                 └──────────────────────────────┘
 │  • decompose         │
 │  • review + test     │
 │  • commit + push     │
@@ -43,12 +43,13 @@ and so a terminal panel's ~2-second auto-cancel can never kill a long run.
 
 | Runner   | Default agent model                     | Cheaper / stronger alternatives                      |
 | -------- | --------------------------------------- | ---------------------------------------------------- |
-| `claude` | `claude-sonnet-5`                       | `haiku` (cheapest); `claude-opus-*` (more judgement) |
+| `claude` | `claude-sonnet-5`                       | `haiku` (cheapest); Sonnet is the default coding tier |
 | `opencode` | `opencode/deepseek-v4.1-flash-free` ($0) | `opencode/flint-40b-free`, `opencode/pulse-alpha-free` |
 
 The orchestrator is **DeepSeek V4 Pro** (`deepseek/deepseek-v4-pro`) on OpenCode, or
-Claude on Claude Code. Either way, the quality bar is the brief plus your review,
-not the model.
+**Claude Opus 5.5** (`claude-opus-5-5`) on Claude Code. Coding agents run **Haiku** or
+**Sonnet** (Claude) or a free model (OpenCode). Either way, the quality bar is the
+brief plus your review, not the model.
 
 ## Install
 
