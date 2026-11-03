@@ -2,8 +2,8 @@
   "models": {
     "claude": {
       "orchestrator": "claude-opus-5-5",
-      "agent": "claude-sonnet-5",
-      "agent_cheap": "claude-haiku-4-5"
+      "agent": "claude-sonnet-5-5",
+      "agent_cheap": "claude-haiku-5-5"
     },
     "opencode": {
       "orchestrator": "deepseek/deepseek-v4-pro",

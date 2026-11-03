@@ -36,8 +36,8 @@ into one parallel batch.
 `launch.sh` picks a default per runner from `../../config.json` (`models.<runner>.agent`);
 pass `--model` to override.
 
-- **Claude Code runner** (default `claude-sonnet-5`): the coding tier is **Sonnet**
-  (default) or **Haiku** — pass `--model haiku` (or `claude-haiku-4-5`) for the
+- **Claude Code runner** (default `claude-sonnet-5-5`): the coding tier is **Sonnet**
+  (default) or **Haiku** — pass `--model haiku` (or `claude-haiku-5-5`) for the
   cheapest runs. Haiku handles well-specified, mechanical work on the first pass —
   UI screens, CRUD forms, list/grid views, a controller that mirrors a sibling.
   Reach for Sonnet when the task carries more judgement. The orchestrator stays on

@@ -53,8 +53,8 @@ edit it to change defaults deterministically:
 | Role             | Claude Code       | OpenCode                              |
 | ---------------- | ----------------- | ------------------------------------- |
 | Orchestrator     | `claude-opus-5-5` | `deepseek/deepseek-v4-pro`            |
-| Agent (default)  | `claude-sonnet-5` | `opencode/deepseek-v4.1-flash-free` ($0) |
-| Agent (cheaper)  | `claude-haiku-4-5`| —                                     |
+| Agent (default)  | `claude-sonnet-5-5` | `opencode/deepseek-v4.1-flash-free` ($0) |
+| Agent (cheaper)  | `claude-haiku-5-5`| —                                     |
 | Agent (stronger) | —                 | `opencode/flint-40b-free`             |
 
 The orchestrator is the decision model; coding agents run the cheap tier. Either way,

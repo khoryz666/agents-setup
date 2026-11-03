@@ -9,7 +9,7 @@ REPO_ROOT="$(cd "$SKILL_DIR/../.." && pwd -P)"
 CONFIG_FILE="$REPO_ROOT/config.json"
 
 # Fallback defaults, used only if config.json / python3 are unavailable.
-CLAUDE_DEFAULT_MODEL="claude-sonnet-5"
+CLAUDE_DEFAULT_MODEL="claude-sonnet-5-5"
 OPENCODE_DEFAULT_MODEL="opencode/deepseek-v4.1-flash-free"
 
 # The file-only agent the OpenCode runner selects (installed by install.sh).
