@@ -1,33 +1,32 @@
 ---
 name: new-project
 description: >-
-  Start a new app or tool with the user's default stack: Rust backend, plain
-  HTML/JS UI (React only when truly needed), Nix flake plus direnv for the dev
-  environment, minimal dependencies and DRY code. Use when the user asks to build
-  a new tool, app, CLI or service from scratch or from a spec, or to set up the
-  dev environment for a repo.
+  Start a new app, tool or service from an idea or spec: confirm scope, set up a
+  reproducible dev environment, keep dependencies minimal and code DRY, and
+  deliver a complete working product in small commits. Use when the user asks
+  to build something from scratch, start from a spec, or set up a repo's dev
+  environment.
 ---
 
 # new-project
 
 ## Defaults
-- **Backend:** Rust, std plus a few well-known crates. Don't start in Python or
-  Node and port later.
-- **UI:** plain HTML/CSS/JS served by the backend. React only if the UI really
-  needs it. Mobile: the framework the spec names, zero third-party packages
-  unless the spec lists them.
-- **Dev env:** `flake.nix` + `.envrc` (`use flake`) from the first commit. All
-  tools and dependencies come from the locked flake; no ad-hoc `pip`, `uv`,
-  `rustup` or global installs.
-- **Dependencies:** fewest possible. Push back on each new one; prefer std,
-  framework APIs and tools already in the Nix closure.
-- **Code:** DRY. One home for each constant, type and string.
+- **Stack:** use what the user or spec names, or the user's stated defaults
+  (memory, CLAUDE.md). If none, ask once before writing code. Don't start in one
+  language and port later.
+- **Reproducible environment** from the first commit: pinned toolchain and a
+  lockfile, so a fresh clone builds with one command.
+- **Few dependencies.** Question each one; prefer the standard library and
+  platform APIs.
+- **Simple UI.** Use the lightest UI technology that does the job.
+- **DRY.** Each constant, type and string has one home.
 
 ## Steps
-1. If there is a spec, read it fully and list what will be built. Build the
-   whole working product first, then hand over.
-2. Scaffold, one commit each (follow the `commit` skill): `.gitignore`, Nix env,
-   project skeleton, then each feature.
+1. If there is a spec, read it all and list what will be built.
+2. Scaffold one commit per concern (see the `commit` skill): ignore file, dev
+   environment, skeleton, then each feature.
 3. Add CI that runs the same checks as the commit gate.
-4. README in simple sentences: what the app is for first, then how to use it,
-   then how to build it (follow the `write-docs` skill).
+4. Build the whole working product before handing over, then check it against
+   the spec item by item.
+5. Write the README with the `write-docs` skill: purpose first, then usage, then
+   build steps.

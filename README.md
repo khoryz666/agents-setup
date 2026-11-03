@@ -16,7 +16,7 @@ A collection of [Claude Code](https://claude.com/claude-code) /
 - **`apply-review`** — work a review or fix plan item by item: triage, one tested commit per fix, measure, defer the rest.
 - **`ui-polish`** — clean, obvious UI: controls over hint text, natural wording, i18n, themes, screen sizes, QA.
 - **`release`** — push, watch CI until green, fix failures, release notes and a clean source archive.
-- **`new-project`** — start new work on Rust + Nix flakes + direnv with minimal dependencies and DRY code.
+- **`new-project`** — start from an idea or spec with a reproducible env, minimal dependencies and DRY code.
 
 ## parallel-agents
 
