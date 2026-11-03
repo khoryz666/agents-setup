@@ -7,7 +7,7 @@ description: >-
   wants to save tokens by delegating coding to a cheaper model, run work across
   multiple agents in parallel / "fan out" a batch of independent tasks, or watch
   agents build in real terminal windows with code appearing in their editor.
-  Trigger on "offload to <model>", "use a cheaper model", "use a free model",
+  Trigger on "offload to (model)", "use a cheaper model", "use a free model",
   "parallel agents", "fan out", "split this up", "spawn N agents", even when the
   user does not name the skill or a model explicitly.
   Linux/macOS with the claude or opencode CLI on the host; adapt the paths/test
