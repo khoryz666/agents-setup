@@ -53,29 +53,25 @@ brief plus your review, not the model.
 
 ## Install
 
-Clone anywhere and run the installer once — it links the skill (and the OpenCode
-file-only agent) into the global config directories for both CLIs:
+Clone anywhere and run the installer once — it links every skill (and any OpenCode
+agents they ship) into the global config directories for both CLIs:
 
 ```bash
 git clone git@github.com:khoryz666/agents-setup.git
 cd agents-setup
 ./install.sh
-./scripts/check-cli.sh
+./skills/parallel-agents/scripts/check-cli.sh
 ```
 
 `install.sh` is idempotent and uses symlinks, so `git pull` in this repo updates the
-skill in place. You can also clone straight into a skills directory:
+skills in place. Add a skill by dropping a `skills/<id>/SKILL.md` directory — the
+installer discovers it automatically.
 
-```bash
-# Claude Code only (also discovered by OpenCode)
-git clone git@github.com:khoryz666/agents-setup.git ~/.claude/skills/parallel-agents
-# or OpenCode only
-git clone git@github.com:khoryz666/agents-setup.git ~/.config/opencode/skills/parallel-agents
-```
-
-Claude Code discovers it as the `parallel-agents` skill; OpenCode discovers it by the
-same ID. See [`SKILL.md`](SKILL.md) for the full workflow and
-[`references/brief-template.md`](references/brief-template.md) for the brief format.
+Claude Code discovers each skill as `<id>`; OpenCode discovers it by the same ID. See
+[`skills/parallel-agents/SKILL.md`](skills/parallel-agents/SKILL.md) for the full
+workflow and
+[`skills/parallel-agents/references/brief-template.md`](skills/parallel-agents/references/brief-template.md)
+for the brief format.
 
 ## Prerequisites
 
@@ -85,7 +81,7 @@ same ID. See [`SKILL.md`](SKILL.md) for the full workflow and
   - `curl -fsSL https://opencode.ai/install | bash`, then `opencode auth login`.
 - A shared working directory between the orchestrator's shell and the host, so files
   an agent writes are visible to the orchestrator's review tools.
-- `scripts/check-cli.sh` verifies the CLI(s) are present and prints their versions.
+- `skills/parallel-agents/scripts/check-cli.sh` verifies the CLI(s) are present and prints their versions.
 
 The scripts are stack-agnostic; adapt the paths and the test command in the briefs
 for your project's language and framework.
@@ -94,11 +90,11 @@ for your project's language and framework.
 
 ```bash
 # one brief per task at .agents/briefs/<name>.md, then:
-./scripts/launch.sh --repo /abs/path/to/repo --names topics,questions,import --runner opencode
+./skills/parallel-agents/scripts/launch.sh --repo /abs/path/to/repo --names topics,questions,import --runner opencode
 # or force the Claude runner and a cheaper model:
-./scripts/launch.sh --repo /abs/path/to/repo --names topics,questions,import --runner claude --model haiku
+./skills/parallel-agents/scripts/launch.sh --repo /abs/path/to/repo --names topics,questions,import --runner claude --model haiku
 # watch in visible windows instead of detached background processes:
-./scripts/launch.sh --repo /abs/path/to/repo --names topics,questions,import --tmux
+./skills/parallel-agents/scripts/launch.sh --repo /abs/path/to/repo --names topics,questions,import --tmux
 ```
 
 Each agent writes `.agents/runs/<name>.done` when it exits; the orchestrator waits on
@@ -109,14 +105,14 @@ under `.agents/` (gitignored).
 
 | File | Purpose |
 | --- | --- |
-| `SKILL.md` | The skill definition and full workflow. |
-| `scripts/launch.sh` | Fan out N agents in parallel, one detached process each. |
-| `scripts/run-agent.sh` | A single agent (launched by `launch.sh`). |
-| `scripts/check-cli.sh` | Prerequisite check for `claude` / `opencode`. |
-| `scripts/lib.sh` | Shared helpers and per-runner model defaults. |
-| `install.sh` | Link the skill + OpenCode file-only agent into global config. |
-| `opencode/agents/parallel-agent.md` | The OpenCode file-only agent definition. |
-| `references/brief-template.md` | The brief format and how to split tasks for parallelism. |
+| `skills/parallel-agents/SKILL.md` | The skill definition and full workflow. |
+| `skills/parallel-agents/scripts/launch.sh` | Fan out N agents in parallel, one detached process each. |
+| `skills/parallel-agents/scripts/run-agent.sh` | A single agent (launched by `launch.sh`). |
+| `skills/parallel-agents/scripts/check-cli.sh` | Prerequisite check for `claude` / `opencode`. |
+| `skills/parallel-agents/scripts/lib.sh` | Shared helpers and per-runner model defaults. |
+| `install.sh` | Link every skill + OpenCode agent into global config. |
+| `skills/parallel-agents/opencode/agents/parallel-agent.md` | The OpenCode file-only agent definition. |
+| `skills/parallel-agents/references/brief-template.md` | The brief format and how to split tasks for parallelism. |
 
 ## License
 

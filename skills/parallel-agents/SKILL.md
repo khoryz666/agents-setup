@@ -129,6 +129,6 @@ or untested.
 - `scripts/launch.sh` — fan out N agents in parallel (one detached process each).
 - `scripts/run-agent.sh` — a single agent (launched by launch.sh; not called directly).
 - `scripts/check-cli.sh` — prerequisite check for `claude` / `opencode`.
-- `install.sh` — link the skill + OpenCode file-only agent into global config.
 - `opencode/agents/parallel-agent.md` — the OpenCode file-only agent definition.
 - `references/brief-template.md` — the brief format and how to split tasks for parallelism.
+- `../../install.sh` (repo root) — link this skill and its OpenCode agent into global config.
