@@ -68,8 +68,8 @@ Deterministic settings live in [`config.json`](config.json), not in the docs:
 - `attribution.*` — Claude Code commit/PR co-author trailers, applied to
   `~/.claude/settings.json` by `install.sh` (other keys are preserved).
 
-Fill in `attribution.commit` (and `attribution.pr`) to have Claude Code append a
-co-author trailer to commits. Re-run `install.sh` after changing `config.json`.
+An empty string (the default) means Claude Code adds no co-author trailer; fill in
+`attribution.commit` (and `attribution.pr`) to set your own. Re-run `install.sh` after changing `config.json`.
 
 ## Install
 
