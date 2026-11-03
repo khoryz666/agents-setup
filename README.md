@@ -12,6 +12,7 @@ A collection of [Claude Code](https://claude.com/claude-code) /
 - **`commit`** — small one-thing commits with one-line conventional messages, each gated on the project's checks.
 - **`write-docs`** — short, simple READMEs, changelogs, plans and page copy; purpose first, `Decide:` items, no AI attribution.
 - **`explain-plainly`** — big-picture-first explanations, meeting/viva talking points and fast learning paths.
+- **`align-docs`** — cross-check docs, reports, citations and code; one home per fact, remove unverifiable claims.
 
 ## parallel-agents
 
