@@ -9,6 +9,7 @@ A collection of [Claude Code](https://claude.com/claude-code) /
 - **`parallel-agents`** — offload implementation to cheaper models running in
   detached host processes, while the orchestrator model plans, reviews, tests, and
   commits. Documented below.
+- **`commit`** — small one-thing commits with one-line conventional messages, each gated on the project's checks.
 
 ## parallel-agents
 
