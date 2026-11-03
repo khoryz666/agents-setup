@@ -18,7 +18,7 @@ link_if_absent() {
   local src="$1" dst="$2"
   mkdir -p "$(dirname "$dst")"
   if [ -L "$dst" ]; then
-    if [ "$(readlink -f "$dst" 2>/dev/null || true)" = "$src" ]; then
+    if [ "$(readlink "$dst")" = "$src" ]; then
       info "already installed: $dst -> $src"
     else
       rm -f "$dst"
