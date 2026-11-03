@@ -13,6 +13,7 @@ A collection of [Claude Code](https://claude.com/claude-code) /
 - **`write-docs`** — short, simple READMEs, changelogs, plans and page copy; purpose first, `Decide:` items, no AI attribution.
 - **`explain-plainly`** — big-picture-first explanations, meeting/viva talking points and fast learning paths.
 - **`align-docs`** — cross-check docs, reports, citations and code; one home per fact, remove unverifiable claims.
+- **`apply-review`** — work a review or fix plan item by item: triage, one tested commit per fix, measure, defer the rest.
 
 ## parallel-agents
 
