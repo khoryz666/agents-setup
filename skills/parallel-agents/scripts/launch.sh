@@ -33,6 +33,11 @@ done
 [ -d "$repo" ]  || { echo "launch: --repo is not a directory: $repo" >&2; exit 2; }
 repo="$(cd "$repo" && pwd)"
 
+if [ "$tmux_mode" -eq 1 ] && { [ -z "${TMUX:-}" ] || ! command -v tmux >/dev/null 2>&1; }; then
+  color_yellow "--tmux needs to run inside a tmux session; falling back to detached processes"
+  tmux_mode=0
+fi
+
 runner="$(resolve_runner "$runner")"
 case "$runner" in
   claude|opencode) ;;
@@ -70,7 +75,7 @@ for name in "${name_list[@]}"; do
     continue
   fi
 
-  if [ "$tmux_mode" -eq 1 ] && command -v tmux >/dev/null 2>&1; then
+  if [ "$tmux_mode" -eq 1 ]; then
     # Visible window (tmux). The transcript is still teed to the log by run-agent.sh.
     qcmd="$(printf '%q ' "${args[@]}")"
     tmux new-window -d -n "$title" "bash -c $qcmd"
