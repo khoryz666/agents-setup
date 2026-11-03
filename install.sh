@@ -5,7 +5,8 @@
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills"
+CLAUDE_CONFIG="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+CLAUDE_DIR="$CLAUDE_CONFIG/skills"
 OPENCODE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/opencode"
 
 info() { printf '\033[32m[install]\033[0m %s\n' "$*"; }
@@ -51,10 +52,10 @@ done
 info "installed $n skill(s)"
 
 # 2. Apply deterministic settings (attribution) from config.json to
-#    ~/.claude/settings.json, preserving every other key.
+#    the Claude Code settings.json, preserving every other key.
 config="$REPO_DIR/config.json"
 if [ -f "$config" ] && command -v python3 >/dev/null 2>&1; then
-  python3 - "$config" "$HOME/.claude/settings.json" <<'PY'
+  python3 - "$config" "$CLAUDE_CONFIG/settings.json" <<'PY'
 import json, os, sys
 cfg = json.load(open(sys.argv[1]))
 attr = cfg.get("attribution")
