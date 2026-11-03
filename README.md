@@ -1,8 +1,16 @@
-# parallel-agents
+# agents-setup
 
-A [Claude Code](https://claude.com/claude-code) / [OpenCode](https://opencode.ai)
-skill for **offloading implementation to cheaper models** running in detached host
-processes, while the orchestrator model plans, reviews, tests, and commits.
+A collection of [Claude Code](https://claude.com/claude-code) /
+[OpenCode](https://opencode.ai) skills. Add a skill by dropping a
+`skills/<id>/SKILL.md` directory; `install.sh` links them all into both CLIs.
+
+## Skills
+
+- **`parallel-agents`** — offload implementation to cheaper models running in
+  detached host processes, while the orchestrator model plans, reviews, tests, and
+  commits. Documented below.
+
+## parallel-agents
 
 The division is what saves tokens: the orchestrator writes a tight brief and reviews
 the diff, while the cheap model does the token-heavy file-writing in its own process —
@@ -39,17 +47,29 @@ and so a terminal panel's ~2-second auto-cancel can never kill a long run.
 ### Choosing the model
 
 `launch.sh` takes `--runner claude|opencode` (default: auto-detect) and `--model`
-(default per runner):
+(default from `config.json`). Model mappings live in [`config.json`](config.json) —
+edit it to change defaults deterministically:
 
-| Runner   | Default agent model                     | Cheaper / stronger alternatives                      |
-| -------- | --------------------------------------- | ---------------------------------------------------- |
-| `claude` | `claude-sonnet-5`                       | `haiku` (cheapest); Sonnet is the default coding tier |
-| `opencode` | `opencode/deepseek-v4.1-flash-free` ($0) | `opencode/flint-40b-free`, `opencode/pulse-alpha-free` |
+| Role             | Claude Code       | OpenCode                              |
+| ---------------- | ----------------- | ------------------------------------- |
+| Orchestrator     | `claude-opus-5-5` | `deepseek/deepseek-v4-pro`            |
+| Agent (default)  | `claude-sonnet-5` | `opencode/deepseek-v4.1-flash-free` ($0) |
+| Agent (cheaper)  | `claude-haiku-4-5`| —                                     |
+| Agent (stronger) | —                 | `opencode/flint-40b-free`             |
 
-The orchestrator is **DeepSeek V4 Pro** (`deepseek/deepseek-v4-pro`) on OpenCode, or
-**Claude Opus 5.5** (`claude-opus-5-5`) on Claude Code. Coding agents run **Haiku** or
-**Sonnet** (Claude) or a free model (OpenCode). Either way, the quality bar is the
-brief plus your review, not the model.
+The orchestrator is the decision model; coding agents run the cheap tier. Either way,
+the quality bar is the brief plus your review, not the model.
+
+## Configuration
+
+Deterministic settings live in [`config.json`](config.json), not in the docs:
+
+- `models.*` — orchestrator and coding-agent models per runner (read by `launch.sh`).
+- `attribution.*` — Claude Code commit/PR co-author trailers, applied to
+  `~/.claude/settings.json` by `install.sh` (other keys are preserved).
+
+Fill in `attribution.commit` (and `attribution.pr`) to have Claude Code append a
+co-author trailer to commits. Re-run `install.sh` after changing `config.json`.
 
 ## Install
 

@@ -26,16 +26,15 @@ into one parallel batch.
 ## The model
 - **Orchestrator (you):** decompose the work, write one brief per task, launch the
   agents, then review every diff, run the project's formatter + tests, and commit.
-  On OpenCode this is **DeepSeek V4 Pro** (`deepseek/deepseek-v4-pro`); on Claude
-  Code it is **Claude Opus 5.5** (`claude-opus-5-5`).
-- **Agent (coding model):** reads its brief and writes files. On Claude Code the
-  coding models are **Haiku** (cheapest) or **Sonnet** (default); on OpenCode they
-  are the free models below. The agent is fenced to file read/write only — no shell,
-  git, or tests — so it cannot commit or run anything risky. Verification and commits
-  are always the orchestrator's job.
+  Model roles are set deterministically in `../../config.json`: orchestrator is
+  **DeepSeek V4 Pro** on OpenCode and **Claude Opus 5.5** on Claude Code.
+- **Agent (coding model):** reads its brief and writes files. It is fenced to file
+  read/write only — no shell, git, or tests — so it cannot commit or run anything
+  risky. Verification and commits are always the orchestrator's job.
 
 ### Choosing the agent model (`--model`)
-`launch.sh` picks a default per runner; pass `--model` to override.
+`launch.sh` picks a default per runner from `../../config.json` (`models.<runner>.agent`);
+pass `--model` to override.
 
 - **Claude Code runner** (default `claude-sonnet-5`): the coding tier is **Sonnet**
   (default) or **Haiku** — pass `--model haiku` (or `claude-haiku-4-5`) for the
@@ -46,9 +45,9 @@ into one parallel batch.
   not the model.
 - **OpenCode runner** (default `opencode/deepseek-v4.1-flash-free`, $0): use any
   free model. `opencode/deepseek-v4.1-flash-free` is the default cheap choice;
-  `opencode/flint-40b-free` and `opencode/pulse-alpha-free` are stronger free
-  options for tasks with more judgement. Run `opencode models` to see the current
-  free list.
+  `opencode/flint-40b-free` is the stronger free option for tasks with more
+  judgement. Run `opencode models` to see the current free list. Change the default
+  in `../../config.json` → `models.opencode.agent`.
 
 ## Why the mechanics are the way they are
 - The desktop app's Terminal panel auto-cancels any command that doesn't return
@@ -69,9 +68,10 @@ npm install -g @anthropic-ai/claude-code   # Claude Code
 curl -fsSL https://opencode.ai/install | bash   # OpenCode
 ```
 
-Then run `./install.sh` once to link the skill (and the OpenCode file-only agent)
-into the global config directories. If a run later prints "Not logged in", open
-the CLI interactively once and complete login.
+Then run `../../install.sh` once to link the skill (and the OpenCode file-only agent)
+into the global config directories, and to apply the `attribution` from
+`../../config.json` to `~/.claude/settings.json`. If a run later prints "Not logged
+in", open the CLI interactively once and complete login.
 
 ## Workflow
 
@@ -132,3 +132,4 @@ or untested.
 - `opencode/agents/parallel-agent.md` — the OpenCode file-only agent definition.
 - `references/brief-template.md` — the brief format and how to split tasks for parallelism.
 - `../../install.sh` (repo root) — link this skill and its OpenCode agent into global config.
+- `../../config.json` (repo root) — deterministic model and attribution settings.

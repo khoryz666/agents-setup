@@ -28,7 +28,16 @@ agent_file="${XDG_CONFIG_HOME:-$HOME/.config}/opencode/agents/${OPENCODE_AGENT}.
 if [ -f "$agent_file" ]; then
   echo "opencode agent: $agent_file"
 else
-  color_yellow "opencode agent '$OPENCODE_AGENT' not installed (run ./install.sh)"
+  color_yellow "opencode agent '$OPENCODE_AGENT' not installed (run $REPO_ROOT/install.sh)"
+fi
+
+echo
+if [ -f "$CONFIG_FILE" ]; then
+  echo "config: $CONFIG_FILE"
+  echo "  claude    agent: $(default_model claude)"
+  echo "  opencode  agent: $(default_model opencode)"
+else
+  color_yellow "config.json not found (expected at $CONFIG_FILE)"
 fi
 
 echo
