@@ -1,34 +1,33 @@
 ---
 name: write-docs
 description: >-
-  Write READMEs, CHANGELOGs, plans, PR bodies, release notes and site copy the
-  way the user likes: short, simple sentences, purpose first, no AI attribution,
-  product choices written as Decide items. Use whenever you write or rewrite
-  documentation, a README, a plan, a description or page copy, or the user asks
-  to "shorten", "simplify" or "make it concise".
+  Write documentation and copy that is short, plain and purpose-first: READMEs,
+  changelogs, plans, PR bodies, release notes, descriptions and page text. Use
+  whenever you write or rewrite docs or copy, or the user asks to "shorten",
+  "simplify", "make it concise" or "use simple sentences".
 ---
 
 # write-docs
 
 ## Style
-- Short, simple sentences. Plain words. Cut anything the reader won't use.
-- **Purpose first.** A README opens with what the thing is for, then how to use
-  it, then how to build it.
-- Follow the repo's existing format (CHANGELOG headings, dates, section names)
-  instead of inventing one.
-- No author names, commit hashes or git history inside items.
-- Never mention Claude or AI authorship; use the user's name where a name is needed.
-- Diagrams convey meaning on their own; keep text on them minimal.
+- Short, simple sentences and plain words. Cut what the reader won't use.
+- **Purpose first.** Say what the thing is for, then how to use it, then how
+  to build or change it.
+- Follow the repo's existing format (headings, dates, section names) instead of
+  inventing a new one.
+- No author names, commit hashes or history inside doc items.
+- No AI attribution.
+- Diagrams should make sense on their own, with very little text.
 
 ## Decisions
-When a finding is really a product choice, write:
+When a finding is really a choice for the owner, write it as:
 
 ```markdown
-**Decide:** <the question>
+**Decide:** the question
 - Pick one: A) ... B) ...
-- Either way: <steps that apply to both>
+- Either way: steps that apply to both
 ```
 
 ## Keep docs DRY
-One fact lives in one place; other docs link to it. When shortening, merge
-duplicate docs and delete the extra ones (see the `align-docs` skill).
+Each fact lives in one place and other docs link to it. When shortening,
+merge duplicate docs and delete the extras (see the `align-docs` skill).
