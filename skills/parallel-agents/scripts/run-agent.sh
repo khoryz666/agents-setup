@@ -27,6 +27,14 @@ done
 [ -n "$marker" ] || { echo "run-agent: --marker is required" >&2; exit 2; }
 [ -n "$log" ]    || { echo "run-agent: --log is required" >&2; exit 2; }
 
+marker_abs="$repo/$marker"
+rm -f "$marker_abs" "$log"
+
+# Always leave a marker, even on an early failure, so the orchestrator's wait
+# loop never hangs on an agent that died before running.
+code=1
+trap 'echo "RUN_DONE exit=$code at $(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$marker_abs"' EXIT
+
 runner="$(resolve_runner "$runner")"
 case "$runner" in
   claude|opencode) ;;
@@ -34,8 +42,6 @@ case "$runner" in
 esac
 model="${model:-$(default_model "$runner")}"
 
-marker_abs="$repo/$marker"
-rm -f "$marker_abs" "$log"
 cd "$repo" || { echo "run-agent: cannot cd to $repo" >&2; exit 1; }
 
 prompt="Read the file $brief in this repository and implement everything it \
@@ -59,7 +65,6 @@ case "$runner" in
     ;;
 esac
 
-echo "RUN_DONE exit=$code at $(date -Is)" > "$marker_abs"
 echo
 echo "=== DONE: $title (exit=$code). Files written; reviewer will test + commit. ==="
 exit 0
