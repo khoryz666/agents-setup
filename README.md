@@ -10,6 +10,7 @@ A collection of [Claude Code](https://claude.com/claude-code) /
   detached host processes, while the orchestrator model plans, reviews, tests, and
   commits. Documented below.
 - **`commit`** — small one-thing commits with one-line conventional messages, each gated on the project's checks.
+- **`write-docs`** — short, simple READMEs, changelogs, plans and page copy; purpose first, `Decide:` items, no AI attribution.
 
 ## parallel-agents
 
