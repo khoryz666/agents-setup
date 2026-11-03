@@ -12,7 +12,11 @@ source "$here/lib.sh"
 runner_script="$here/run-agent.sh"
 
 repo=""; names=""; model=""; runner=""; tmux_mode=0; dry_run=0
+need_val() { [ $# -ge 2 ] || { echo "launch: $1 needs a value" >&2; exit 2; }; }
 while [ $# -gt 0 ]; do
+  case "$1" in
+    --repo|--names|--model|--runner) need_val "$@" ;;
+  esac
   case "$1" in
     --repo)    repo="$2";    shift 2 ;;
     --names)   names="$2";   shift 2 ;;
@@ -26,6 +30,8 @@ done
 
 [ -n "$repo" ]  || { echo "launch: --repo is required (absolute path to repo root)" >&2; exit 2; }
 [ -n "$names" ] || { echo "launch: --names is required (comma/space separated)" >&2; exit 2; }
+[ -d "$repo" ]  || { echo "launch: --repo is not a directory: $repo" >&2; exit 2; }
+repo="$(cd "$repo" && pwd)"
 
 runner="$(resolve_runner "$runner")"
 case "$runner" in
@@ -43,6 +49,9 @@ read -r -a name_list <<< "$(printf '%s' "$names" | tr ',;' '  ')"
 count=0
 for name in "${name_list[@]}"; do
   [ -n "$name" ] || continue
+  case "$name" in
+    *[!A-Za-z0-9._-]*|.*) color_yellow "SKIP: invalid name '$name' (use letters, digits, . _ -)"; continue ;;
+  esac
   brief=".agents/briefs/$name.md"
   if [ ! -f "$repo/$brief" ]; then
     color_yellow "SKIP: no brief at $brief"
