@@ -14,7 +14,7 @@ A collection of [Claude Code](https://claude.com/claude-code) /
 - **`explain-plainly`** — big-picture-first explanations, talking points and fast learning paths.
 - **`align-docs`** — cross-check docs and code; one home per fact, remove claims nothing backs up.
 - **`apply-review`** — work a review or fix plan item by item: triage, one tested commit per fix, measure, defer the rest.
-- **`ui-polish`** — clean, intuitive UI review: controls over hint text, natural wording, i18n, dark mode, mobile, QA.
+- **`ui-polish`** — clean, obvious UI: controls over hint text, natural wording, i18n, themes, screen sizes, QA.
 - **`release`** — push, watch CI on every platform, fix failures, build a light tarball and concise release notes.
 - **`new-project`** — start new work on Rust + Nix flakes + direnv with minimal dependencies and DRY code.
 
