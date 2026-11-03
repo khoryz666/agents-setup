@@ -131,6 +131,7 @@ under `.agents/` (gitignored).
 | `skills/parallel-agents/scripts/check-cli.sh` | Prerequisite check for `claude` / `opencode`. |
 | `skills/parallel-agents/scripts/lib.sh` | Shared helpers and per-runner model defaults. |
 | `install.sh` | Link every skill + OpenCode agent into global config. |
+| `config.json` | Deterministic model and attribution settings. |
 | `skills/parallel-agents/opencode/agents/parallel-agent.md` | The OpenCode file-only agent definition. |
 | `skills/parallel-agents/references/brief-template.md` | The brief format and how to split tasks for parallelism. |
 
