@@ -4,7 +4,7 @@
 set -uo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=lib.sh
+# shellcheck disable=SC1090,SC1091  # lib.sh is resolved via $here at runtime
 source "$here/lib.sh"
 
 status=0

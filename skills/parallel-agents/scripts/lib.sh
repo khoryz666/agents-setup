@@ -13,7 +13,8 @@ CLAUDE_DEFAULT_MODEL="claude-sonnet-5-5"
 OPENCODE_DEFAULT_MODEL="opencode/deepseek-v4.1-flash-free"
 
 # The file-only agent the OpenCode runner selects (installed by install.sh).
-OPENCODE_AGENT="parallel-agent"
+# Exported because run-agent.sh and check-cli.sh read it after sourcing this file.
+export OPENCODE_AGENT="parallel-agent"
 
 color_red()    { printf '\033[31m%s\033[0m\n' "$*"; }
 color_yellow() { printf '\033[33m%s\033[0m\n' "$*"; }
