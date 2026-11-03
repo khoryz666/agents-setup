@@ -12,7 +12,7 @@ A collection of [Claude Code](https://claude.com/claude-code) /
 - **`commit`** — small one-thing commits with one-line conventional messages, each gated on the project's checks.
 - **`write-docs`** — short, plain, purpose-first docs and copy; `Decide:` items, no AI attribution.
 - **`explain-plainly`** — big-picture-first explanations, talking points and fast learning paths.
-- **`align-docs`** — cross-check docs, reports, citations and code; one home per fact, remove unverifiable claims.
+- **`align-docs`** — cross-check docs and code; one home per fact, remove claims nothing backs up.
 - **`apply-review`** — work a review or fix plan item by item: triage, one tested commit per fix, measure, defer the rest.
 - **`ui-polish`** — clean, intuitive UI review: controls over hint text, natural wording, i18n, dark mode, mobile, QA.
 - **`release`** — push, watch CI on every platform, fix failures, build a light tarball and concise release notes.
