@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Prerequisite check: are the runner CLIs installed on this host and logged in?
+# Prerequisite check: are the runner CLIs installed on this host?
+# (Login can't be checked non-interactively; see the hint printed at the end.)
 set -uo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
