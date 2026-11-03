@@ -19,7 +19,7 @@ description: >-
   (`fix(parser): ...`). Imperative, lower case, no trailing period.
 - **Describe the change, not the process.** No mention of AI, rewrites,
   rebuilt history or how the change was produced.
-- **No AI in authorship.** No co-author trailer or "with Claude" unless the
+- **No AI in authorship.** No co-author trailer or "with <assistant>" unless the
   harness or the user requires one. Use the user's name where a name is needed.
 - **Every commit passes.** Find the project's checks (CI config, Makefile,
   package scripts, README) and chain them with `&&`, never `;`, so a broken

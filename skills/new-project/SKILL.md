@@ -12,8 +12,8 @@ description: >-
 
 ## Defaults
 - **Stack:** use what the user or spec names, or the user's stated defaults
-  (memory, CLAUDE.md). If none, ask once before writing code. Don't start in one
-  language and port later.
+  (memory, the project's instructions file). If none, ask once before writing
+  code. Don't start in one language and port later.
 - **Reproducible environment** from the first commit: pinned toolchain and a
   lockfile, so a fresh clone builds with one command.
 - **Few dependencies.** Question each one; prefer the standard library and
