@@ -14,6 +14,7 @@ A collection of [Claude Code](https://claude.com/claude-code) /
 - **`explain-plainly`** — big-picture-first explanations, meeting/viva talking points and fast learning paths.
 - **`align-docs`** — cross-check docs, reports, citations and code; one home per fact, remove unverifiable claims.
 - **`apply-review`** — work a review or fix plan item by item: triage, one tested commit per fix, measure, defer the rest.
+- **`ui-polish`** — clean, intuitive UI review: controls over hint text, natural wording, i18n, dark mode, mobile, QA.
 
 ## parallel-agents
 
