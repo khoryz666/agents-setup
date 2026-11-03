@@ -81,7 +81,13 @@ for name in "${name_list[@]}"; do
     tmux new-window -d -n "$title" "bash -c $qcmd"
   else
     # Fully detached; immune to the parent terminal's Ctrl-C / close.
-    setsid "${args[@]}" >/dev/null 2>&1 </dev/null &
+    # setsid is Linux-only; on macOS fall back to nohup (still survives Ctrl-C
+    # and terminal close because stdin is detached and SIGHUP is ignored).
+    if command -v setsid >/dev/null 2>&1; then
+      setsid "${args[@]}" >/dev/null 2>&1 </dev/null &
+    else
+      nohup "${args[@]}" >/dev/null 2>&1 </dev/null &
+    fi
   fi
   echo "launched: $title  (brief: $brief)"
   count=$((count + 1))
