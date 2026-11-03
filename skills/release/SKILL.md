@@ -1,46 +1,44 @@
 ---
 name: release
 description: >-
-  Push, watch CI until it passes on every platform, fix failures, and build the
-  release artifacts: a light source tarball for sharing, release notes, version
-  bumps. Use when the user says "push and check CI", "CI failed on windows",
-  "re-create the .tar.gz", "release a new version", or "write release notes".
+  Push, watch CI until every job passes, fix failures, and prepare release
+  output: version bump, concise release notes, and a clean source archive. Use
+  when the user says "push and check CI", "CI failed", "release a new version",
+  "write release notes", or asks for an archive of the code to share.
 ---
 
 # release
 
 ## Before pushing
-- Push only when the user asked. If they say "wait, don't push", stop.
-- Confirm the remote and branch (`git remote -v`, `git status -sb`). Some repos
-  are local-only: never push or tag those.
-- Respect the repo's branch flow (e.g. feature → dev → staging → master); push to
-  the branch the user named.
+- Push only when the user asked. "Wait" means stop.
+- Check the remote and branch (`git remote -v`, `git status -sb`). Never push or
+  tag a repo the user keeps local.
+- Follow the repo's branch flow and push to the branch the user named.
 
 ## Watch CI
 ```bash
 git push
 gh run list --limit 3
 gh run watch <run-id> --exit-status
-gh run view <run-id> --log-failed     # on failure
+gh run view <run-id> --log-failed      # on failure
 ```
-Compare failing and passing commits/platforms to find the cause. Fix it as its
-own commit, push, and watch again until every job is green.
+Compare a passing and a failing run (commit or platform) to find the cause. Fix
+it in its own commit, push, and watch again until every job is green.
 
-Waiting on local processes: wait on a PID (`while kill -0 $pid; do sleep 5; done`)
-or an output file, never `pgrep -f` / `pkill -f` with a pattern typed in the same
-command (it matches the shell itself).
+Wait on local processes by PID (`while kill -0 "$pid"; do sleep 5; done`) or an
+output file, never with `pgrep -f` / `pkill -f` on a pattern typed in the same
+command; it matches the shell itself.
 
-## Light source tarball
-For sending work to a reviewer or supervisor: tracked files only, no build output,
-models, datasets or secrets.
+## Source archive
+Tracked files only, so no build output, data or secrets:
 
 ```bash
 name="$(basename "$PWD")-$(git rev-parse --short HEAD)"
 git archive --format=tar.gz --prefix="$name/" -o "../$name.tar.gz" HEAD
 tar -tzf "../$name.tar.gz" | head; du -h "../$name.tar.gz"
 ```
-Rebuild it after every fix that lands.
+Rebuild it after each fix that lands.
 
 ## Release notes
-Short and concise: what changed for the user, in a few bullets. Follow the
-repo's CHANGELOG format if it has one. No commit hashes or author names.
+A few bullets on what changed for users. Follow the repo's changelog format if
+it has one. No hashes or author names.

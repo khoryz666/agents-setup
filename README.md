@@ -15,7 +15,7 @@ A collection of [Claude Code](https://claude.com/claude-code) /
 - **`align-docs`** — cross-check docs and code; one home per fact, remove claims nothing backs up.
 - **`apply-review`** — work a review or fix plan item by item: triage, one tested commit per fix, measure, defer the rest.
 - **`ui-polish`** — clean, obvious UI: controls over hint text, natural wording, i18n, themes, screen sizes, QA.
-- **`release`** — push, watch CI on every platform, fix failures, build a light tarball and concise release notes.
+- **`release`** — push, watch CI until green, fix failures, release notes and a clean source archive.
 - **`new-project`** — start new work on Rust + Nix flakes + direnv with minimal dependencies and DRY code.
 
 ## parallel-agents
