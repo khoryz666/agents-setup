@@ -64,12 +64,19 @@ dst = sys.argv[2]
 data = {}
 if os.path.exists(dst):
     try:
-        data = json.load(open(dst))
-    except Exception:
-        data = {}
+        with open(dst) as f:
+            data = json.load(f)
+    except ValueError as e:
+        # Never clobber a settings file we can't parse; let the user fix it.
+        sys.exit(f"[install] {dst} is not valid JSON ({e}); attribution not applied")
 data["attribution"] = attr
 os.makedirs(os.path.dirname(dst), exist_ok=True)
-json.dump(data, open(dst, "w"), indent=2, ensure_ascii=False)
+# Write atomically so an interrupted run can't leave a truncated settings file.
+tmp = dst + ".tmp"
+with open(tmp, "w") as f:
+    json.dump(data, f, indent=2, ensure_ascii=False)
+    f.write("\n")
+os.replace(tmp, dst)
 print("applied attribution ->", dst)
 PY
 else
