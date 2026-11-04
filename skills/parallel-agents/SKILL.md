@@ -10,8 +10,8 @@ description: >-
   Trigger on "offload to (model)", "use a cheaper model", "use a free model",
   "parallel agents", "fan out", "split this up", "spawn N agents", even when the
   user does not name the skill or a model explicitly.
-  Linux/macOS with the claude or opencode CLI on the host; adapt the paths/test
-  command for your stack.
+  Linux/macOS (bash) or Windows (PowerShell), with the claude or opencode CLI on
+  the host; adapt the paths/test command for your stack.
 ---
 
 # parallel-agents
@@ -51,27 +51,30 @@ pass `--model` to override.
 
 ## Why the mechanics are the way they are
 - The desktop app's Terminal panel auto-cancels any command that doesn't return
-  within ~2s (it sends Ctrl-C). So every long run is launched **detached** via
-  `setsid` (or a `tmux` window with `--tmux`); the launch call returns instantly
-  and the agent is immune. Watch a run with `tail -f .agents/runs/<name>.log`.
+  within ~2s (it sends Ctrl-C). So every long run is launched **detached** — via
+  `setsid` (or a `tmux` window with `--tmux`) on Linux/macOS, and via a hidden
+  `Start-Process` (or a visible console window with `-Tmux`) on Windows. The launch
+  call returns instantly and the agent is immune. Watch a run with
+  `tail -f .agents/runs/<name>.log` (or read the `.log` file).
 - The **repo working directory is shared** between the orchestrator's shell and
   the host, so files an agent writes are visible to your review tools.
 - Agents are file-only (see below), so they can't run the project's tests or
   commit. Verification stays in one place — you.
 
 ## Prerequisites (check once)
-Run `scripts/check-cli.sh`. It confirms the host has `claude` and/or `opencode`
-and prints their versions. Install the missing CLI(s):
+Run `scripts/check-cli.sh` (Linux/macOS) or `scripts/check-cli.ps1` (Windows). It
+confirms the host has `claude` and/or `opencode` and prints their versions. Install
+the missing CLI(s):
 
 ```bash
 npm install -g @anthropic-ai/claude-code   # Claude Code
 curl -fsSL https://opencode.ai/install | bash   # OpenCode
 ```
 
-Then run `../../install.sh` once to link the skill (and the OpenCode file-only agent)
-into the global config directories, and to apply the `attribution` from
-`../../config.json` to `~/.claude/settings.json`. If a run later prints "Not logged
-in", open the CLI interactively once and complete login.
+Then run `../../install.sh` (or `../../install.ps1` on Windows) once to link the skill
+(and the OpenCode file-only agent) into the global config directories, and to apply
+the `attribution` from `../../config.json` to `~/.claude/settings.json`. If a run
+later prints "Not logged in", open the CLI interactively once and complete login.
 
 ## Workflow
 
@@ -92,9 +95,14 @@ brief IS the prompt — the user can open it to see exactly what each agent was 
 ```
 <skill>/scripts/launch.sh --repo <REPO_ROOT> --names topics,questions,import [--runner opencode] [--model ...]
 ```
-`--runner` defaults to auto-detect (`claude` if present, else `opencode`); force it
-with `--runner claude` or `--runner opencode`. `--model` defaults per runner (see
-above). Add `--tmux` to open one visible window per agent instead of detached
+On Windows, use the PowerShell counterpart:
+```
+powershell -ExecutionPolicy Bypass -File <skill>/scripts/launch.ps1 -Repo <REPO_ROOT> -Names topics,questions,import [-Runner opencode] [-Model ...]
+```
+`--runner` / `-Runner` defaults to auto-detect (`claude` if present, else `opencode`);
+force it with `claude` or `opencode`. `--model` / `-Model` defaults per runner (see
+above). Add `--tmux` (bash) to open one tmux window per agent, or `-Tmux`
+(PowerShell) to open one visible console window per agent, instead of detached
 background processes. The call returns at once — do not wait on it in the panel.
 
 ### 4. Wait for all of them to finish
@@ -126,10 +134,11 @@ or untested.
   `.agents/briefs/`, markers and transcripts in `.agents/runs/`.
 
 ## Files
-- `scripts/launch.sh` — fan out N agents in parallel (one detached process each).
-- `scripts/run-agent.sh` — a single agent (launched by launch.sh; not called directly).
-- `scripts/check-cli.sh` — prerequisite check for `claude` / `opencode`.
+- `scripts/launch.sh` / `scripts/launch.ps1` — fan out N agents in parallel (one detached process each).
+- `scripts/run-agent.sh` / `scripts/run-agent.ps1` — a single agent (launched by launch; not called directly).
+- `scripts/check-cli.sh` / `scripts/check-cli.ps1` — prerequisite check for `claude` / `opencode`.
+- `scripts/lib.sh` / `scripts/lib.ps1` — shared helpers (config lookup, runner resolution).
 - `opencode/agents/parallel-agent.md` — the OpenCode file-only agent definition.
 - `references/brief-template.md` — the brief format and how to split tasks for parallelism.
-- `../../install.sh` (repo root) — link this skill and its OpenCode agent into global config.
+- `../../install.sh` / `../../install.ps1` (repo root) — link this skill and its OpenCode agent into global config.
 - `../../config.json` (repo root) — deterministic model and attribution settings.

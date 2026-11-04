@@ -5,10 +5,12 @@ carry across machines.
 
 A **skill** is a Markdown file that teaches an agent how to do one thing well
 (commit, write docs, fan out parallel agents). This repo collects mine, and
-`install.sh` links them into Claude Code and OpenCode so both pick them up
-automatically.
+`install.sh` (Linux/macOS) or `install.ps1` (Windows) links them into Claude Code
+and OpenCode so both pick them up automatically.
 
 ## Install
+
+Linux / macOS:
 
 ```bash
 git clone git@github.com:khoryz666/agents-setup.git
@@ -16,8 +18,16 @@ cd agents-setup
 ./install.sh
 ```
 
-That's it. `install.sh` symlinks every skill into `~/.claude/skills` and
-`~/.config/opencode/skills`. It's safe to re-run, and because it uses symlinks,
+Windows (PowerShell):
+
+```powershell
+git clone git@github.com:khoryz666/agents-setup.git
+cd agents-setup
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+That's it. The installer links every skill into `~/.claude/skills` and
+`~/.config/opencode/skills`. It's safe to re-run, and because it uses links,
 `git pull` updates the skills in place.
 
 ## What's inside
@@ -55,8 +65,15 @@ You plan and review; cheap models write the code in parallel, so their output ne
 fills your context window. Write one brief per task, then launch:
 
 ```bash
+# Linux / macOS
 ./skills/parallel-agents/scripts/launch.sh \
   --repo /abs/path/to/repo --names topics,questions,import
+```
+
+```powershell
+# Windows
+powershell -ExecutionPolicy Bypass -File .\skills\parallel-agents\scripts\launch.ps1 `
+  -Repo C:\path\to\repo -Names topics,questions,import
 ```
 
 Each agent writes its files and a `.agents/runs/<name>.done` marker. You review the
@@ -64,7 +81,8 @@ diffs, test, and commit. Models are set in `config.json`.
 
 ## Prerequisites
 
-Linux or macOS, with `claude` and/or `opencode` installed and logged in.
+Linux, macOS, or Windows (PowerShell), with `claude` and/or `opencode` installed
+and logged in.
 
 ## License
 
