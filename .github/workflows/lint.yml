@@ -14,3 +14,24 @@ jobs:
         run: shellcheck -x install.sh skills/*/scripts/*.sh
       - name: validate config.json
         run: python3 -m json.tool config.json > /dev/null
+
+  psscriptanalyzer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module PSScriptAnalyzer -Force -Scope CurrentUser -SkipPublisherCheck
+      - name: Analyze PowerShell
+        shell: pwsh
+        run: |
+          # Write-Host is intentional here (interactive CLI scripts), and OPENCODE_AGENT
+          # is an export consumed by the scripts that dot-source lib.ps1.
+          $issues = Invoke-ScriptAnalyzer -Path . -Recurse `
+            -ExcludeRule PSAvoidUsingWriteHost, PSUseDeclaredVarsMoreThanAssignments
+          if ($issues) {
+            $issues | Format-Table -AutoSize
+            exit 1
+          }
